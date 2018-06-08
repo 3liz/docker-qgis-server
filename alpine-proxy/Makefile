@@ -3,7 +3,7 @@
 #
 #
 
-NAME=qgis3-map-service
+NAME=qgis-map-server
 
 BUILDID=$(shell date +"%Y%m%d%H%M")
 COMMITID=$(shell git rev-parse --short HEAD)
@@ -16,10 +16,6 @@ VERSION_TAG=$(VERSION)
 ifdef REGISTRY_URL
 REGISTRY_PREFIX=$(REGISTRY_URL)/
 BUILD_ARGS += --build-arg REGISTRY_PREFIX=$(REGISTRY_PREFIX)
-endif
-
-ifndef PYPISERVER
-PYPISERVER=pypi.snap.lizlan
 endif
 
 BUILD_ARGS += --build-arg pypi_server=$(PYPISERVER)
