@@ -28,8 +28,8 @@ if [ "$(id -u)" = '0' ]; then
 
    if [[ "$QGSRV_DISPLAY_XVFB" == "ON" ]]; then
      # RUN Xvfb in the background
-     echo "Running XXvfb"
-     /usr/bin/Xvfb $XVFB_ARGS &
+     echo "Running Xvfb"
+     nohup /usr/bin/Xvfb $XVFB_ARGS &
      export DISPLAY=":99"
    fi
    exec gosu $QGSRV_USER  "$BASH_SOURCE" "$@"
