@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends gosu wget && rm
 RUN pip3 install --no-cache-dir setuptools wheel \
     && pip3 install --no-cache-dir  --extra-index-url=https://$pypi_server --trusted-host=$pypi_server \
         py-qgis-server \
+        py-amqp-client \
     && rm -rf /root/.cache
 
 COPY /docker-entrypoint.sh /
