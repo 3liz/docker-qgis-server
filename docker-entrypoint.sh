@@ -26,6 +26,9 @@ if [ "$(id -u)" = '0' ]; then
    XVFB_DEFAULT_ARGS="-screen 0 1024x768x24 -ac +extension GLX +render -noreset"
    XVFB_ARGS=${QGSRV_XVFB_ARGS:-":99 $XVFB_DEFAULT_ARGS"}
 
+   # Delete any actual Xvfb lock file
+   rm -rf /tmp/.X99-lock
+
    if [[ "$QGSRV_DISPLAY_XVFB" == "ON" ]]; then
      # RUN Xvfb in the background
      echo "Running Xvfb"
