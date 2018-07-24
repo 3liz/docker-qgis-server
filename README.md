@@ -13,7 +13,7 @@ docker run -p 8080:8080 \
        -e QGSRV_LOGGING_LEVEL=DEBUG  \
        -e QGSRV_CACHE_ROOTDIR:/projects \
        -e QGSRV_CACHE_SIZE:10 \
-       3liz/qgis3-map-service
+       3liz/qgis-map-server
 ```
 
 
