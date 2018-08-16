@@ -1,5 +1,10 @@
 # OSX Garbage
 .DS_store
 
+__output__
+__pycache__
+.pytest_cache
+
+
 factory.manifest
 
