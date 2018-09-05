@@ -1,11 +1,11 @@
 # Need docker above v17-05.0-ce
 ARG REGISTRY_PREFIX=''
 
-FROM  ${REGISTRY_PREFIX}qgis3-server:latest
+FROM  ${REGISTRY_PREFIX}qgis-platform:latest
 MAINTAINER David Marteau <david.marteau@3liz.com>
 LABEL Description="QGIS3 Python Server" Vendor="3liz.org" Version="1."
 
-RUN apt-get update && apt-get install -y --no-install-recommends unzip gosu curl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends unzip gosu curl make && rm -rf /var/lib/apt/lists/*
 
 ARG server_version=master
 ARG server_archive=https://github.com/3liz/py-qgis-server/archive/${server_version}.zip
