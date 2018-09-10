@@ -1,7 +1,8 @@
 # Need docker above v17-05.0-ce
 ARG REGISTRY_PREFIX=''
+ARG QGIS_VERSION=latest
 
-FROM  ${REGISTRY_PREFIX}qgis-platform:latest
+FROM  ${REGISTRY_PREFIX}qgis-platform:${QGIS_VERSION}
 MAINTAINER David Marteau <david.marteau@3liz.com>
 LABEL Description="QGIS3 Python Server" Vendor="3liz.org" Version="1."
 
