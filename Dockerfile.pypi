@@ -8,8 +8,10 @@ LABEL Description="QGIS3 Python Server" Vendor="3liz.org" Version="1."
 
 ARG pypi_server 
 
-RUN apt-get update && apt-get install -y --no-install-recommends gosu wget && rm -rf /var/lib/apt/lists/*
-
+RUN apt-get update && apt-get install -y --no-install-recommends gosu wget \
+    && apt-get clean  && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /usr/share/man 
+   
 # pip is broken on /ubuntu debian so that
 # using --no-cache-dir together with --extra-index-url does note work:
 # see https://github.com/pypa/pip/issues/4580
