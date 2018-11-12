@@ -25,8 +25,6 @@ RUN echo $server_archive \
 COPY /docker-entrypoint.sh /
 RUN chmod 0755 /docker-entrypoint.sh
 
-COPY factory.manifest /build.manifest
-
 EXPOSE 8080
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

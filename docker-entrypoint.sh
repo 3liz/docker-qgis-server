@@ -4,7 +4,14 @@ set -e
 
 QGSRV_USER=${QGSRV_USER:-"9001:9001"}
 
-if [ "$1" = "qgisserver-proxy" ]; then
+if [[ "$1" == "version" ]]; then
+    version=`pip3 list | grep py-qgis-server | tr -s [:blank:] | cut -d ' ' -f 2`
+    qgis_version=`python3 -c "from qgis.core import Qgis; print(Qgis.QGIS_VERSION.split('-')[0])"`
+    echo "$qgis_version-$version"
+    exit 0
+fi
+
+if [[ "$1" = "qgisserver-proxy" ]]; then
     shift
     echo "Running Qgis server proxy"
     exec gosu $QGSRV_USER qgisserver --proxy $@
@@ -42,7 +49,7 @@ fi
 export QGIS_DISABLE_MESSAGE_HOOKS=1
 export QGIS_NO_OVERRIDE_IMPORT=1
 
-if [ "$1" = "qgisserver-worker" ]; then
+if [[ "$1" == "qgisserver-worker" ]]; then
     shift
     echo "Running Qgis server worker"
     exec qgisserver-worker --host=$ROUTER_HOST $@

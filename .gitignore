@@ -5,6 +5,9 @@ __output__
 __pycache__
 .pytest_cache
 
+.cache
+.local
+*.log
 
 factory.manifest
 
