@@ -75,7 +75,7 @@ LOCAL_HOME=$(shell pwd)
 endif
 
 test:
-	mkdir -p $(HOME)/.local
+	mkdir -p $(LOCAL_HOME)/.local $(LOCAL_HOME)/.pipcache 
 	docker run --rm --name qgsserver-test-$(VERSION)-$(COMMITID) -u $(QGSRV_USER) \
 		-w /tests \
 		-v $$(pwd)/tests:/tests \
