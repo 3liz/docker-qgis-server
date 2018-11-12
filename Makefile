@@ -1,3 +1,4 @@
+SHELL:=bash
 # 
 # Build docker image
 #
