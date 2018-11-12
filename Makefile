@@ -31,7 +31,7 @@ BUILDIMAGE=$(NAME):$(VERSION)-$(COMMITID)
 MANIFEST=factory.manifest
 
 all:
-	@echo "Usage: make [build|archive|deliver|clean]"
+	@echo "Usage: make [build|test|deliver|clean]"
 
 build: _build manifest
 
@@ -65,8 +65,11 @@ push:
 	docker tag $(BUILDIMAGE) $(REGISTRY_PREFIX)$(NAME):$(VERSION); \
 	}
 
-clean:
+clean-all:
 	docker rmi -f $(shell docker images $(BUILDIMAGE) -q)
+
+clean:
+	 docker rmi $(BUILDIMAGE)
 
 TEST_HTTP_PORT:=8080
 QGSRV_USER:=$(shell id -u)
