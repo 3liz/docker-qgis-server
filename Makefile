@@ -85,7 +85,7 @@ test:
 		-w /tests \
 		-v $$(pwd)/tests:/tests \
 		-v $(LOCAL_HOME)/.local:/.local \
-		-v $(LOCAL_HOME)/.cache/pip:/.pipcache \
+		-v $(LOCAL_HOME)/.pipcache:/.pipcache \
 		-e PIP_CACHE_DIR=/.pipcache \
 		-e QGSRV_TEST_PROTOCOL=/tests/data \
 		-e QGSRV_SERVER_HTTP_PROXY=yes \
