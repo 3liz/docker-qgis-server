@@ -4,23 +4,22 @@ ARG QGIS_VERSION=latest
 
 FROM  ${REGISTRY_PREFIX}qgis-platform:${QGIS_VERSION}
 MAINTAINER David Marteau <david.marteau@3liz.com>
-LABEL Description="QGIS3 Python Server" Vendor="3liz.org" Version="1."
+LABEL Description="QGIS3 Python Server" Vendor="3liz.org"
 
-RUN apt-get update && apt-get install -y --no-install-recommends unzip gosu curl make \
+ARG git_branch=master
+ARG git_repository=https://github.com/3liz/py-qgis-server.git
+
+RUN apt-get update && apt-get install -y --no-install-recommends gosu git make \
     && apt-get clean  && rm -rf /var/lib/apt/lists/* \
     && rm -rf /usr/share/man
 
-ARG server_version=master
-ARG server_archive=https://github.com/3liz/py-qgis-server/archive/${server_version}.zip
-
 # Install server
-RUN echo $server_archive \
-    && curl -Ls -X GET  $server_archive --output python-server.zip \
-    && unzip -q python-server.zip \
-    && rm python-server.zip \
-    && make -C py-qgis-server-${server_version} dist \
-    && pip3 install --no-cache py-qgis-server-${server_version}/build/dist/*.tar.gz \
-    && rm -rf py-qgis-server-${server_version}
+RUN git clone --branch $git_branch --depth=1 $git_repository py-qgis-server \
+    && make -C py-qgis-server dist \
+    && pip3 install --no-cache py-qgis-server/build/dist/*.tar.gz \
+    && cp py-qgis-server/factory.manifest /build.manifest \
+    && rm -rf py-qgis-server \
+    && rm -rf /root/.cache /root/.ccache
 
 COPY /docker-entrypoint.sh /
 RUN chmod 0755 /docker-entrypoint.sh

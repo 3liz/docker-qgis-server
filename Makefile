@@ -9,6 +9,7 @@ NAME=qgis-map-server
 BUILDID=$(shell date +"%Y%m%d%H%M")
 COMMITID=$(shell git rev-parse --short HEAD)
 
+# QGIS platform version
 VERSION:=release
 
 ifdef PYPISERVER
@@ -16,7 +17,7 @@ BUILD_ARGS=--build-arg pypi_server=$(PYPISERVER)
 DOCKERFILE=-f Dockerfile.pypi
 else
 BUILD_VERSION:=master
-BUILD_ARGS=--build-arg server_version=$(BUILD_VERSION)
+BUILD_ARGS=--build-arg git_branch=$(BUILD_VERSION)
 endif
 
 BUILD_ARGS += --build-arg QGIS_VERSION=$(VERSION)
@@ -87,6 +88,7 @@ test:
 		-v $(LOCAL_HOME)/.cache/pip:/.pipcache \
 		-e PIP_CACHE_DIR=/.pipcache \
 		-e QGSRV_TEST_PROTOCOL=/tests/data \
+		-e QGSRV_SERVER_HTTP_PROXY=yes \
 		--entrypoint /tests/run-tests.sh $(BUILDIMAGE)
 
 run:
