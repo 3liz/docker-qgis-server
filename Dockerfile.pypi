@@ -12,14 +12,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends gosu wget \
     && apt-get clean  && rm -rf /var/lib/apt/lists/* \
     && rm -rf /usr/share/man 
    
-# pip is broken on /ubuntu debian so that
-# using --no-cache-dir together with --extra-index-url does note work:
-# see https://github.com/pypa/pip/issues/4580
-RUN pip3 install --no-cache-dir setuptools wheel \
-    && pip3 install --no-cache-dir  --extra-index-url=https://$pypi_server --trusted-host=$pypi_server \
+RUN pip3 install --extra-index-url=https://$pypi_server --trusted-host=$pypi_server \
         py-qgis-server \
         py-amqp-client \
-    && rm -rf /root/.cache
+    && rm -rf /root/.cache /root/.ccache
 
 COPY /docker-entrypoint.sh /
 RUN chmod 0755 /docker-entrypoint.sh
