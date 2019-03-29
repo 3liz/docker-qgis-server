@@ -10,7 +10,7 @@ BUILDID=$(shell date +"%Y%m%d%H%M")
 COMMITID=$(shell git rev-parse --short HEAD)
 
 # QGIS platform version
-VERSION:=release
+FLAVOR:=release
 
 ifdef PYPISERVER
 BUILD_ARGS=--build-arg pypi_server=$(PYPISERVER)
@@ -20,14 +20,14 @@ BUILD_VERSION:=master
 BUILD_ARGS=--build-arg git_branch=$(BUILD_VERSION)
 endif
 
-BUILD_ARGS += --build-arg QGIS_VERSION=$(VERSION)
+BUILD_ARGS += --build-arg QGIS_VERSION=$(FLAVOR)
 
 ifdef REGISTRY_URL
 REGISTRY_PREFIX=$(REGISTRY_URL)/
 BUILD_ARGS += --build-arg REGISTRY_PREFIX=$(REGISTRY_PREFIX)
 endif
 
-BUILDIMAGE=$(NAME):$(VERSION)-$(COMMITID)
+BUILDIMAGE=$(NAME):$(FLAVOR)-$(COMMITID)
 
 MANIFEST=factory.manifest
 
@@ -56,14 +56,14 @@ tag:
 	{ set -e; source factory.manifest; \
 	docker tag $(BUILDIMAGE) $(REGISTRY_PREFIX)$(NAME):$$version; \
 	docker tag $(BUILDIMAGE) $(REGISTRY_PREFIX)$(NAME):$$version_short; \
-	docker tag $(BUILDIMAGE) $(REGISTRY_PREFIX)$(NAME):$(VERSION); \
+	docker tag $(BUILDIMAGE) $(REGISTRY_PREFIX)$(NAME):$(FLAVOR); \
 	}
 
 push:
 	{ set -e; source factory.manifest; \
 	docker push $(REGISTRY_URL)/$(NAME):$$version; \
 	docker push $(REGISTRY_URL)/$(NAME):$$version_short; \
-	docker tag $(BUILDIMAGE) $(REGISTRY_PREFIX)$(NAME):$(VERSION); \
+	docker tag $(BUILDIMAGE) $(REGISTRY_PREFIX)$(NAME):$(FLAVOR); \
 	}
 
 clean-all:
@@ -80,13 +80,13 @@ LOCAL_HOME=$(shell pwd)
 endif
 
 test:
-	mkdir -p $(LOCAL_HOME)/.local $(LOCAL_HOME)/.pipcache 
+	mkdir -p $(shell pwd)/.local $(LOCAL_HOME)/.cache 
 	docker run --rm --name qgsserver-test-$(VERSION)-$(COMMITID) -u $(QGSRV_USER) \
 		-w /tests \
 		-v $$(pwd)/tests:/tests \
-		-v $(LOCAL_HOME)/.local:/.local \
-		-v $(LOCAL_HOME)/.pipcache:/.pipcache \
-		-e PIP_CACHE_DIR=/.pipcache \
+		-v $(shell pwd)/.local:/.local \
+		-v $(LOCAL_HOME)/.cache:/.cache \
+		-e PIP_CACHE_DIR=/.cache \
 		-e QGSRV_TEST_PROTOCOL=/tests/data \
 		-e QGSRV_SERVER_HTTP_PROXY=yes \
 		--entrypoint /tests/run-tests.sh $(BUILDIMAGE)
