@@ -3,6 +3,13 @@ stages:
     - deploy
     - release
 
+.only_changes: &changes_def
+    changes:
+      - Dockerfile.pypi
+      - Makefile
+      - tests/**/*
+      - docker-entrypoint.sh
+
 build:
   stage: build
   script:
@@ -13,11 +20,7 @@ build:
     paths:
       - factory.manifest
   only:
-      changes:
-        - Dockerfile.pypi
-        - Makefile
-        - tests/**/*
-        - docker-entrypoint.sh
+    <<: *changes_def
   tags:
     - infrav3
 
@@ -28,6 +31,8 @@ deploy_snap:
     - $HOME/bin/lzmservicectl update --wait-timeout=500  qgis-worker upgrade 
   environment:
     name: snap
+  only:
+    <<: *changes_def
   tags:
     - infrav3
 
