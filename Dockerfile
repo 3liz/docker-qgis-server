@@ -1,4 +1,3 @@
-# Need docker above v17-05.0-ce
 ARG REGISTRY_PREFIX=''
 ARG QGIS_VERSION=latest
 

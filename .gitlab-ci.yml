@@ -1,0 +1,41 @@
+stages:
+    - build
+    - deploy
+    - release
+
+build:
+  stage: build
+  script:
+    - make build deliver clean
+  environment:
+    name: snap
+  artifacts:
+    paths:
+      - factory.manifest
+  except:
+      changes:
+        - README.md
+  tags:
+    - infrav3
+
+deploy_snap:
+  stage: deploy
+  script:
+    - $HOME/bin/lzmservicectl update map upgrade
+    - $HOME/bin/lzmservicectl update --wait-timeout=500  qgis-worker upgrade 
+  environment:
+    name: snap
+  tags:
+    - infrav3
+
+release:
+  stage: release
+  script:
+    - $FACTORY_SCRIPTS/release-image.sh qgis-map-server
+    - $FACTORY_SCRIPTS/push-to-docker-hub.sh
+  environment:
+    name: production
+  when: manual
+  tags:
+    - infrav3
+
