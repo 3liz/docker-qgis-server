@@ -10,10 +10,13 @@ stages:
       - tests/**/*
       - docker-entrypoint.sh
 
+variables:
+    QGIS_FLAVOR: ltr
+
 build:
   stage: build
   script:
-    - make build test deliver clean
+    - make build test deliver clean FLAVOR=$QGIS_FLAVOR
   environment:
     name: snap
   artifacts:
