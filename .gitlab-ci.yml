@@ -12,9 +12,12 @@ build:
   artifacts:
     paths:
       - factory.manifest
-  except:
+  only:
       changes:
-        - README.md
+        - Dockerfile.pypi
+        - Makefile
+        - tests/**/*
+        - docker-entrypoint.sh
   tags:
     - infrav3
 

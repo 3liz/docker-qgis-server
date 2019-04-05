@@ -10,7 +10,7 @@ BUILDID=$(shell date +"%Y%m%d%H%M")
 COMMITID=$(shell git rev-parse --short HEAD)
 
 # QGIS platform version
-FLAVOR:=release
+FLAVOR:=ltr
 
 ifdef PYPISERVER
 BUILD_ARGS=--build-arg pypi_server=$(PYPISERVER)
