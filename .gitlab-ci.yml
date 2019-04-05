@@ -6,7 +6,7 @@ stages:
 build:
   stage: build
   script:
-    - make build deliver clean
+    - make build test deliver clean
   environment:
     name: snap
   artifacts:
