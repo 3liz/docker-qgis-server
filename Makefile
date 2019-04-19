@@ -80,11 +80,11 @@ LOCAL_HOME=$(shell pwd)
 endif
 
 test:
-	mkdir -p $(shell pwd)/.local $(LOCAL_HOME)/.cache 
+	mkdir -p $$(pwd)/.local $(LOCAL_HOME)/.cache 
 	docker run --rm --name qgsserver-test-$(VERSION)-$(COMMITID) -u $(QGSRV_USER) \
 		-w /tests \
 		-v $$(pwd)/tests:/tests \
-		-v $(shell pwd)/.local:/.local \
+		-v $$(pwd)/.local:/.local \
 		-v $(LOCAL_HOME)/.cache:/.cache \
 		-e PIP_CACHE_DIR=/.cache \
 		-e QGSRV_TEST_PROTOCOL=/tests/data \

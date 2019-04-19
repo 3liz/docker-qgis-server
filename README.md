@@ -16,10 +16,34 @@ docker run -p 8080:8080 \
        3liz/qgis-map-server
 ```
 
+## Requests to OWS services
 
-## Passing MAP arguments
+The OWS requests use the following format:  `/ows/?<ows_query_params>`
+
+Example:
+
+```
+http://myserver:8080/ows/?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetCapabilities
+```
+
+### Passing MAP arguments
 
 MAP arguments are treated as relative to the location given by  `QYWPS_CACHE_ROOTDIR`
+
+### Using with lizmap
+
+In order to use the server with lizmap, you must set the following configuration
+in your `lizmapConfig.ini.php`:
+
+```
+[services]
+wmsServerURL="http://my.domain:<port>/ows/"
+...
+
+; Use relative path
+relativeWMSPath=true
+```
+
 
 ### Qgis project Cache configuration
 
