@@ -12,11 +12,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends gosu git make \
     && apt-get clean  && rm -rf /var/lib/apt/lists/* \
     && rm -rf /usr/share/man
 
+ENV QGSRV_DATA_PATH=/usr/local/share/qgis-server
+
 # Install server
 RUN git clone --branch $git_branch --depth=1 $git_repository py-qgis-server \
     && make -C py-qgis-server dist \
     && pip3 install py-qgis-server/build/dist/*.tar.gz \
-    && cp py-qgis-server/factory.manifest /build.manifest \
     && rm -rf py-qgis-server \
     && rm -rf /root/.cache /root/.ccache
 

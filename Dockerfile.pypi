@@ -11,6 +11,9 @@ ARG pypi_server
 RUN apt-get update && apt-get install -y --no-install-recommends gosu wget \
     && apt-get clean  && rm -rf /var/lib/apt/lists/* \
     && rm -rf /usr/share/man 
+
+# Setup will use this variable for copying manifest
+ENV QGSRV_DATA_PATH=/usr/local/share/qgis-server
    
 RUN pip3 install --extra-index-url=https://$pypi_server --trusted-host=$pypi_server \
         py-qgis-server \
