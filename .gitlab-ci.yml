@@ -30,8 +30,7 @@ build:
 deploy_snap:
   stage: deploy
   script:
-    - $HOME/bin/lzmservicectl update --wait-timeout=500 map upgrade
-    - $HOME/bin/lzmservicectl update --wait-timeout=500 qgis-worker upgrade 
+    - $HOME/bin/lzmservicectl update -C MUTU map
   environment:
     name: snap
   only:

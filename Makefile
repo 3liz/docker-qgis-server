@@ -27,7 +27,7 @@ REGISTRY_PREFIX=$(REGISTRY_URL)/
 BUILD_ARGS += --build-arg REGISTRY_PREFIX=$(REGISTRY_PREFIX)
 endif
 
-BUILDIMAGE=$(NAME):$(FLAVOR)-$(COMMITID)
+BUILDIMAGE:=$(NAME):$(FLAVOR)-$(COMMITID)
 
 MANIFEST=factory.manifest
 
@@ -95,6 +95,7 @@ run:
 	docker run -it --rm -p $(TEST_HTTP_PORT):8080 -v $(shell pwd)/tests/data:/projects \
        -e QGSRV_CACHE_ROOTDIR=/projects \
        -e QGSRV_USER=$(QGSRV_USER) \
+       -e QGSRV_LOGGING_LEVEL=DEBUG \
        $(BUILDIMAGE) 
 
 run-proxy:
