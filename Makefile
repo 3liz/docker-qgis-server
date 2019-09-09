@@ -89,6 +89,7 @@ test:
 		-e PIP_CACHE_DIR=/.cache \
 		-e QGSRV_TEST_PROTOCOL=/tests/data \
 		-e QGSRV_SERVER_HTTP_PROXY=yes \
+		-e QGSRV_SERVER_TIMEOUT=3 \
 		--entrypoint /tests/run-tests.sh $(BUILDIMAGE)
 
 run:

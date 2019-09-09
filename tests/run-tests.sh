@@ -15,7 +15,7 @@ export PATH=$PATH:/.local/bin
 
 # Run the server locally
 echo "Running server..."
-qgisserver -b 127.0.0.1 -p 8080 --timeout=3 --rootdir=$(pwd)/data -w1 &>/tests/__tests__.log &
+qgisserver -b 127.0.0.1 -p 8080 --rootdir=$(pwd)/data -w1 &>/tests/__tests__.log &
 
 # Wait for server to start
 sleep 7
