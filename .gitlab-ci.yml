@@ -39,13 +39,31 @@ deploy_snap:
   tags:
     - infrav3
 
-release:
+# Make release job target visible on gitlab
+release:ltr:
   stage: release
   script:
     - $FACTORY_SCRIPTS/release-image.sh qgis-map-server-$QGIS_FLAVOR
   environment:
     name: production
   when: manual
+  only:
+    variables:
+      - $QGIS_FLAVOR == "ltr"
+  tags:
+    - infrav3
+
+# Make release job target visible on gitlab
+release:release:
+  stage: release
+  script:
+    - $FACTORY_SCRIPTS/release-image.sh qgis-map-server-$QGIS_FLAVOR
+  environment:
+    name: production
+  when: manual
+  only:
+    variables:
+      - $QGIS_FLAVOR == "release"
   tags:
     - infrav3
 
