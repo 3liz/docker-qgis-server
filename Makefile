@@ -63,7 +63,6 @@ push:
 	{ set -e; source factory.manifest; \
 	docker push $(REGISTRY_URL)/$(NAME):$$version; \
 	docker push $(REGISTRY_URL)/$(NAME):$$version_short; \
-	docker tag $(BUILDIMAGE) $(REGISTRY_PREFIX)$(NAME):$(FLAVOR); \
 	}
 
 clean-all:
