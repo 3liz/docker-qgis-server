@@ -15,6 +15,9 @@ FLAVOR:=ltr
 ifdef PYPISERVER
 BUILD_ARGS=--build-arg pypi_server=$(PYPISERVER)
 DOCKERFILE=-f Dockerfile.pypi
+ifdef PYPISCHEME
+BUILD_ARGS+=--build-arg pypi_scheme=$(PYPISCHEME)
+endif
 else
 BUILD_VERSION:=master
 BUILD_ARGS=--build-arg git_branch=$(BUILD_VERSION)
@@ -47,6 +50,7 @@ manifest:
 	echo name=$(NAME) > $(MANIFEST) && \
     echo version=$$version >> $(MANIFEST) && \
     echo version_short=$$version_short >> $(MANIFEST) && \
+    echo release_tag=$(FLAVOR) >> $(MANIFEST) && \
     echo buildid=$(BUILDID)   >> $(MANIFEST) && \
     echo commitid=$(COMMITID) >> $(MANIFEST); }
 
@@ -63,6 +67,7 @@ push:
 	{ set -e; source factory.manifest; \
 	docker push $(REGISTRY_URL)/$(NAME):$$version; \
 	docker push $(REGISTRY_URL)/$(NAME):$$version_short; \
+	docker push $(REGISTRY_URL)/$(NAME):$(FLAVOR); \
 	}
 
 clean-all:
