@@ -12,16 +12,8 @@ COMMITID=$(shell git rev-parse --short HEAD)
 # QGIS platform version
 FLAVOR:=ltr
 
-ifdef PYPISERVER
-BUILD_ARGS=--build-arg pypi_server=$(PYPISERVER)
-DOCKERFILE=-f Dockerfile.pypi
-ifdef PYPISCHEME
-BUILD_ARGS+=--build-arg pypi_scheme=$(PYPISCHEME)
-endif
-else
-BUILD_VERSION:=master
+BUILD_VERSION:=1.2.x
 BUILD_ARGS=--build-arg git_branch=$(BUILD_VERSION)
-endif
 
 BUILD_ARGS += --build-arg QGIS_VERSION=$(FLAVOR)
 

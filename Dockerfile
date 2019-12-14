@@ -5,7 +5,7 @@ FROM  ${REGISTRY_PREFIX}qgis-platform:${QGIS_VERSION}
 MAINTAINER David Marteau <david.marteau@3liz.com>
 LABEL Description="QGIS3 Python Server" Vendor="3liz.org"
 
-ARG git_branch=master
+ARG git_branch=1.2.x
 ARG git_repository=https://github.com/3liz/py-qgis-server.git
 
 RUN apt-get update && apt-get install -y --no-install-recommends gosu git make \

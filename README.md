@@ -1,3 +1,7 @@
+# DEPRECATED: Docker build files have been moved to the [py-qgis-server repository](https://github.com/3liz/py-qgis-server)
+
+This repository will build images only up to 1.2.x versions
+
 # Qgis 3 map  server
 
 Setup a OGC WWS/WFS/WCS service.
